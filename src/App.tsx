@@ -32,13 +32,14 @@
         <h1 className="text-4xl font-bold mb-2">名前を授ける</h1>
         <p className="text-gray-400 mb-10">あなたに"もう一つの名前"を。</p>
 
-        <div className="flex gap-3 mb-8">
+        <div className="text-gray-500 text-sm mb-6">好きなものや自分の特徴を入力してください</div>
+      <div className="flex gap-3 mb-8">
           {keywords.map((kw, i) => (
             <input
               key={i}
               value={kw}
               onChange={(e) => handleKeyword(i, e.target.value)}
-              placeholder={`キーワード${i + 1}`}
+              placeholder={i === 0 ? 'キーワード（必須）' : `キーワード${i + 1}（任意）`}
               className="bg-white border border-gray-300 rounded-lg px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-sky-400"
             />
           ))}
