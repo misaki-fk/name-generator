@@ -1,73 +1,108 @@
-# React + TypeScript + Vite
+# 名前を授ける
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+あなたに"もう一つの名前"を授けるアプリです。
+ペンネーム・ラジオネーム・ユーザーネームを、簡単に生成できます。
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🪶 アプリ概要
 
-## React Compiler
+好きな言葉や特徴を入力すると、
+モードに応じた名前を自動生成します。
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+「生成する」のではなく、
+**"名前を授ける体験"**をテーマにしています。
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## ✨ 主な機能
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* キーワード入力（最大3つ）
+* モード選択
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+  * かわいい
+  * 厨二
+  * ギャル
+  * ビジネス
+  * 黒歴史
+* 名前の自動生成
+* 名前の理由表示
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+---
+
+## 🖥️ 使用技術
+
+### フロントエンド
+
+* React
+* TypeScript
+* Tailwind CSS
+* Framer Motion
+
+### 開発環境
+
+* Docker
+
+### デプロイ
+
+* Vercel
+
+### バージョン管理
+
+* GitHub
+
+---
+
+## 🚀 起動方法（ローカル）
+
+### Dockerを使用する場合
+
+```bash
+docker compose up
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+ブラウザで以下にアクセス：
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 ```
+http://localhost:5173
+```
+
+---
+
+### Dockerを使わない場合
+
+```bash
+npm install
+npm run dev
+```
+
+---
+
+## 🌐 デプロイ先
+
+（※デプロイ後にURLを記載）
+
+---
+
+## 🎯 制作背景
+
+ペンネームやラジオネームを考えるとき、
+「しっくりくる名前が思いつかない」と感じたことから制作しました。
+
+単なるランダム生成ではなく、
+**"今の自分に合う名前を授ける"体験**を目指しています。
+
+---
+
+## 🔧 今後の改善案
+
+* 名前のバリエーション増加
+* UIの演出強化
+* お気に入り保存機能
+
+---
+
+## 📌 補足
+
+* 学習目的で作成したアプリです
+* 認証機能やデータ保存機能は実装していません
