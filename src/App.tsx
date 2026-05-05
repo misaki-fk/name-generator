@@ -1,6 +1,6 @@
   import { generateName } from './generator'
   import { useState } from 'react'
-  import { motion } from 'framer-motion'
+  import { motion, AnimatePresence } from 'framer-motion'
 
   const MODES = ['かわいい', '厨二', 'ギャル', 'ビジネス', 'アイドルオタク']
 
@@ -29,22 +29,50 @@
     }
 
     return (
-      <div className="min-h-screen bg-gradient-to-b from-white to-sky-100 text-gray-800 flex flex-col items-center py-16 px-4">
-        <h1 className="text-4xl font-bold mb-2">名前を授ける</h1>
-        <p className="text-gray-400 mb-10">あなたに"もう一つの名前"を。</p>
+      <div className="relative min-h-screen bg-gradient-to-b from-white via-sky-50 to-sky-100 text-gray-800 flex flex-col items-center py-16 px-4 overflow-hidden">
 
-        <div className="text-gray-500 text-sm mb-6">好きなものや自分の特徴を入力してください</div>
-      <div className="flex gap-3 mb-8">
+        {/* 背景の雲 */}
+        {[
+          { top: '5%',  left: '-5%',  w: 320, delay: 0 },
+          { top: '12%', left: '60%',  w: 260, delay: 1 },
+          { top: '35%', left: '-8%',  w: 200, delay: 2 },
+          { top: '55%', left: '70%',  w: 280, delay: 0.5 },
+          { top: '75%', left: '10%',  w: 240, delay: 1.5 },
+          { top: '85%', left: '55%',  w: 300, delay: 1 },
+        ].map((cloud, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full bg-sky-200 opacity-70 blur-3xl pointer-events-none"
+            style={{ top: cloud.top, left: cloud.left, width: cloud.w, height: cloud.w * 0.5 }}
+            animate={{ y: [0, -10, 0] }}
+            transition={{ duration: 6, repeat: Infinity, delay: cloud.delay, ease: 'easeInOut' }}
+          />
+        ))}
+
+        <motion.h1
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="text-5xl font-bold mb-6 bg-gradient-to-r from-yellow-300 via-white to-yellow-300 bg-clip-text text-transparent tracking-widest"
+          style={{ fontFamily: "'Zen Antique', serif", filter: 'drop-shadow(0 0 12px rgba(253, 224, 71, 0.7))' }}>
+          名前を授ける
+        </motion.h1>
+        <div className="text-sky-400 mb-2">あなたに"もう一つの名前"を。</div>
+
+        <div className="text-gray-400 text-sm mb-8">好きなものや自分の特徴を入力してください</div>
+        <div className="flex gap-3 mb-8">
           {keywords.map((kw, i) => (
             <input
               key={i}
               value={kw}
               onChange={(e) => handleKeyword(i, e.target.value)}
               placeholder={i === 0 ? 'キーワード（必須）' : `キーワード${i + 1}（任意）`}
-              className="bg-white border border-gray-300 rounded-lg px-4 py-2 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-sky-400"
+              className="bg-white border border-sky-200 rounded-lg px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-yellow-300 text-center"
             />
           ))}
         </div>
+
+        <div className="text-gray-400 text-sm mb-6">好きなもモードを選んでください</div>
 
         <div className="flex gap-2 flex-wrap justify-center mb-8">
           {MODES.map((m) => (
@@ -61,34 +89,76 @@
             </button>
           ))}
         </div>
+        
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+          className="text-5xl text-yellow-400 mb-3"
+        >
+          ⇩
+        </motion.div>
 
-        <button
+        <motion.button
           onClick={handleGenerate}
-          className="bg-sky-400 hover:bg-sky-300 text-white px-8 py-3 rounded-full font-bold text-lg transition-colors mb-10"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="bg-gradient-to-r from-yellow-400 to-amber-300 hover:from-yellow-300 hover:to-amber-200 text-indigo-950 px-10 py-3 rounded-full font-bold text-lg transition-colors mb-10 shadow-lg shadow-yellow-400/30"
         >
           授ける
-        </button>
+        </motion.button>
 
-        {result && (
-          <motion.div
-            key={result.name}
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: 'easeOut' }}
-            className="bg-white border border-sky-300 rounded-2xl px-8 py-6 text-center max-w-sm shadow-sm"
-          >
-            <p className="text-2xl font-bold text-sky-500 mb-3">{result.name}</p>
-            <p className="text-gray-400 text-sm">{result.reason}</p>
-            <a
-              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`私の新しい名前は「${result.name}」\n#名前を授ける`)} `}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block bg-gray-100 text-gray-500 text-sm px-4 py-2 rounded-full hover:bg-gray-200 transition-colors mt-4"
+        <AnimatePresence>
+          {result && (
+            <motion.div
+              key="modal-overlay"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-10 flex items-center justify-center"
+              onClick={() => setResult(null)}
             >
-              Xでシェア
-            </a>
-          </motion.div>
-        )}
+              <motion.div
+                key={result.name}
+                initial={{ opacity: 0, scale: 0.85, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.85 }}
+                transition={{ duration: 0.4, ease: 'easeOut' }}
+                className="relative bg-white rounded-3xl px-12 py-10 text-center w-118 mx-8"
+                style={{ boxShadow: '0 0 40px rgba(253, 224, 71, 0.5)' }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  onClick={() => setResult(null)}
+                  className="absolute top-4 right-4 text-gray-300 hover:text-gray-500 text-lg"
+                >
+                  ✕
+                </button>
+                <div
+                  className="text-4xl bg-gradient-to-r from-yellow-400 to-amber-300 bg-clip-text text-transparent mb-12 mt-10"
+                  style={{ fontFamily: "'Zen Antique', serif", filter: 'drop-shadow(0 0 8px rgba(253, 224, 71, 0.6))' }}
+                >
+                  {result.name}
+                </div>
+                <div className="text-gray-400 text-sm mb-6">{result.reason}</div>
+                <a
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`私の新しい名前は「${result.name}」\n#名前を授ける`)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block bg-gray-100 text-gray-500 text-sm px-4 py-2 rounded-full hover:bg-gray-200 transition-colors mb-4"
+                >
+                  Xでシェア
+                </a>
+                <br />
+                <button
+                  onClick={handleGenerate}
+                  className="text-sky-400 text-sm hover:text-sky-500 transition-colors mt-1"
+                >
+                  もう一度名前をもらう
+                </button>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     )
   }
