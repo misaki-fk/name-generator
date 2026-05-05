@@ -1,3 +1,7 @@
+function pick<T>(arr: T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)]
+}
+
 export function generateName(
   keywords: string[],
   mode: string
@@ -5,52 +9,69 @@ export function generateName(
   const filled = keywords.filter((k) => k.trim() !== '')
   if (filled.length === 0 || mode === '') return null
   const shuffled = [...filled].sort(() => Math.random() - 0.5)
-  const count = filled.length > 1 && Math.random() > 0.5 ? 2 : 1
+  const count = Math.floor(Math.random() * filled.length) + 1
   const main = shuffled.slice(0, count).join('')
-  const suffixes = ['ぴ', 'ちゃん', 'たん', 'っち']
-  const suffix = suffixes[Math.floor(Math.random() * suffixes.length)]
+  const short = main.slice(0, 2)
+
   switch (mode) {
-    case 'かわいい':{
+    case 'かわいい': {
+      const pattern = pick([
+        () => main + pick(['ぴ', 'ちゃん', 'たん', 'っち']),
+        () => short + short,
+        () => pick(['ゆめ', 'ふわ', 'ぽわ', 'きら']) + main + 'ちゃん',
+      ])
+      const name = pattern()
       return {
-        name: main + suffix,
-        reason: `「${main}」にかわいい語感の「${suffix}」を授けました`,
+        name,
+        reason: `「${main}」にかわいい魔法をかけました`,
       }
     }
-    case '厨二':{
-      const dark = ['闇', '漆黒の', 'ダーク', '闇に堕ちた'] [Math.floor(Math.random() * 4)]
-      const suffix = ['ナイト', 'X', 'ソウル', '・ダーク'] [Math.floor(Math.random() * 4)]
+    case '厨二': {
+      const pattern = pick([
+        () => pick(['闇', '漆黒の', 'ダーク', '闇に堕ちた']) + main + pick(['ナイト', 'X', 'ソウル', '・ダーク']),
+        () => pick(['黒炎ノ', '蒼月ノ', '紅牙ノ', '虚無ノ']) + main,
+        () => short + pick(['使い', '支配者', 'の末裔', '=ZERO', '・ダークネス']),
+      ])
+      const name = pattern()
       return {
-        name: dark + main + suffix,
-        reason: `「${main}」に厨二成分「${dark}」と「${suffix}」を授けました`,
+        name,
+        reason: `「${main}」に厨二の闇エネルギーを注入しました`,
       }
     }
     case 'ギャル': {
-      const pattern = [
-        `${main}ぽよ`,
-        `${main}みん`,
-        `${main}たそ`,
-        `${main.slice(0, 2)}ちゃん`,
-        `${main.slice(0, 2)}っち`,
-      ]
-      const name = pattern[Math.floor(Math.random() * pattern.length)]
+      const pattern = pick([
+        () => main + pick(['ぽよ', 'みん', 'たそ']),
+        () => short + pick(['ちゃん', 'っち']),
+        () => short + pick(['ちゃみ', 'めろ', 'ぽよ', 'みん']),
+      ])
+      const name = pattern()
       return {
         name,
         reason: `「${main}」をギャル語でかわいく授けました`,
       }
     }
-    case 'ビジネス':{
+    case 'ビジネス': {
       const core = filled.slice(0, 2).join('・')
-      const biz = ['エバンジェリスト', '戦略担当', 'スペシャリスト', 'ソリューションアーキテクト'][Math.floor(Math.random() * 4)]
+      const pattern = pick([
+        () => core + pick(['エバンジェリスト', '戦略担当', 'スペシャリスト', 'ソリューションアーキテクト']),
+        () => pick(['シニア', 'チーフ', 'リード', 'エグゼクティブ']) + core + pick(['マネージャー', 'ディレクター', 'オフィサー']),
+        () => core + pick(['推進室長', 'DX担当', 'グロースハッカー', 'アドバイザー']),
+      ])
+      const name = pattern()
       return {
-        name: core + biz,
-        reason: `「${core}」にそれっぽい肩書き「${biz}」を授けました`,
+        name,
+        reason: `「${core}」にそれっぽい肩書きを授けました`,
       }
     }
-    case 'アイドルオタク':{
-      const pattern = [ `${main}推し`, `${main}担`, `尊い${main}`, `${main}しか勝たん`]
-      const name = pattern[Math.floor(Math.random() * pattern.length)]
+    case 'アイドルオタク': {
+      const pattern = pick([
+        () => main + pick(['推し', '担', 'しか勝たん', 'が全て']),
+        () => pick(['尊い', '神', '永遠に']) + main,
+        () => main + pick(['ペン', 'オタ', 'のヲタ']) + 'の民',
+      ])
+      const name = pattern()
       return {
-        name: name,
+        name,
         reason: `「${main}」への愛を名前に込めました`,
       }
     }
