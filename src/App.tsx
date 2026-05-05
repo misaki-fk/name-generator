@@ -141,21 +141,22 @@
                   {result.name}
                 </div>
                 <div className="text-gray-400 text-sm mb-6">{result.reason}</div>
-                <a
-                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`私の新しい名前は「${result.name}」\n#名前を授ける\nhttps://name-generator-iota-wine.vercel.app`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-block bg-gray-100 text-gray-500 text-sm px-4 py-2 rounded-full hover:bg-gray-200 transition-colors mb-4"
-                >
-                  Xでシェア
-                </a>
-                <br />
-                <button
-                  onClick={handleGenerate}
-                  className="text-sky-400 text-sm hover:text-sky-500 transition-colors mt-1"
-                >
-                  もう一度名前をもらう
-                </button>
+                <div className="flex flex-col items-center gap-3">
+                  <a
+                    href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`私の新しい名前は「${result.name}」\n#名前を授ける\nhttps://name-generator-iota-wine.vercel.app`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-gray-100 text-gray-500 text-sm px-4 py-2 rounded-full hover:bg-gray-200 transition-colors"
+                  >
+                    Xでシェア
+                  </a>
+                  <button
+                    onClick={handleGenerate}
+                    className="text-sky-400 text-sm hover:text-sky-500 transition-colors"
+                  >
+                    もう一度名前をもらう
+                  </button>
+                </div>
               </motion.div>
             </motion.div>
           )}
