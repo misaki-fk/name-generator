@@ -60,17 +60,18 @@
         <div className="text-sky-400 mb-2">あなたに"もう一つの名前"を。</div>
 
         <div className="text-gray-400 text-sm mb-8">好きなものや自分の特徴を入力してください</div>
-        <div className="flex flex-col md:flex-row gap-3 mb-8 w-full max-w-lg px-4">
+        <div className="flex flex-col md:flex-row gap-3 w-full max-w-lg px-4">
           {keywords.map((kw, i) => (
             <input
               key={i}
               value={kw}
               onChange={(e) => handleKeyword(i, e.target.value)}
-              placeholder={i === 0 ? 'キーワード（必須）' : `キーワード${i + 1}（任意）`}
+              placeholder={`キーワード${i + 1}`}
               className="w-full bg-white border border-sky-200 rounded-lg px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-yellow-300 text-center"
             />
           ))}
         </div>
+        <div className="text-gray-400 text-xs mt-2 mb-8">※ キーワード1は必須、2・3は任意です</div>
 
         <div className="text-gray-400 text-sm mb-6">好きなもモードを選んでください</div>
 
