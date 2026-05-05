@@ -4,7 +4,9 @@ export function generateName(
 ): { name: string; reason: string } | null {
   const filled = keywords.filter((k) => k.trim() !== '')
   if (filled.length === 0 || mode === '') return null
-  const main = filled[0]
+  const shuffled = [...filled].sort(() => Math.random() - 0.5)
+  const count = filled.length > 1 && Math.random() > 0.5 ? 2 : 1
+  const main = shuffled.slice(0, count).join('')
   const suffixes = ['ぴ', 'ちゃん', 'たん', 'っち']
   const suffix = suffixes[Math.floor(Math.random() * suffixes.length)]
   switch (mode) {
@@ -22,19 +24,26 @@ export function generateName(
         reason: `「${main}」に厨二成分「${dark}」と「${suffix}」を授けました`,
       }
     }
-    case 'ギャル':{
-      const gal = [`${main}大丈夫そ？`, `まじ${main}神`, `ガチで${main}`, `${main}レート高い`]
-      const name = gal[Math.floor(Math.random() * gal.length)]
+    case 'ギャル': {
+      const pattern = [
+        `${main}ぽよ`,
+        `${main}みん`,
+        `${main}たそ`,
+        `${main.slice(0, 2)}ちゃん`,
+        `${main.slice(0, 2)}っち`,
+      ]
+      const name = pattern[Math.floor(Math.random() * pattern.length)]
       return {
-        name: name,
-        reason: `「${main}」にギャル語の「${name}」で昇華しました`,
+        name,
+        reason: `「${main}」をギャル語でかわいく授けました`,
       }
     }
     case 'ビジネス':{
+      const core = filled.slice(0, 2).join('・')
       const biz = ['エバンジェリスト', '戦略担当', 'スペシャリスト', 'ソリューションアーキテクト'][Math.floor(Math.random() * 4)]
       return {
-        name: main + biz,
-        reason: `「${main}」にそれっぽい肩書き「${biz}」を授けました`,
+        name: core + biz,
+        reason: `「${core}」にそれっぽい肩書き「${biz}」を授けました`,
       }
     }
     case 'アイドルオタク':{
