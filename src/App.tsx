@@ -53,21 +53,21 @@
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-5xl font-bold mb-6 bg-gradient-to-r from-yellow-300 via-white to-yellow-300 bg-clip-text text-transparent tracking-widest"
+          className="text-3xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-yellow-300 via-white to-yellow-300 bg-clip-text text-transparent tracking-widest"
           style={{ fontFamily: "'Zen Antique', serif", filter: 'drop-shadow(0 0 12px rgba(253, 224, 71, 0.7))' }}>
           名前を授ける
         </motion.h1>
         <div className="text-sky-400 mb-2">あなたに"もう一つの名前"を。</div>
 
         <div className="text-gray-400 text-sm mb-8">好きなものや自分の特徴を入力してください</div>
-        <div className="flex gap-3 mb-8">
+        <div className="flex flex-col md:flex-row gap-3 mb-8 w-full max-w-lg px-4">
           {keywords.map((kw, i) => (
             <input
               key={i}
               value={kw}
               onChange={(e) => handleKeyword(i, e.target.value)}
               placeholder={i === 0 ? 'キーワード（必須）' : `キーワード${i + 1}（任意）`}
-              className="bg-white border border-sky-200 rounded-lg px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-yellow-300 text-center"
+              className="w-full bg-white border border-sky-200 rounded-lg px-4 py-3 text-gray-800 placeholder-gray-400 focus:outline-none focus:border-yellow-300 text-center"
             />
           ))}
         </div>
@@ -123,7 +123,7 @@
                 animate={{ opacity: 1, scale: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.85 }}
                 transition={{ duration: 0.4, ease: 'easeOut' }}
-                className="relative bg-white rounded-3xl px-12 py-10 text-center w-118 mx-8"
+                className="relative bg-white rounded-3xl px-8 md:px-12 py-10 text-center w-full max-w-sm mx-4"
                 style={{ boxShadow: '0 0 40px rgba(253, 224, 71, 0.5)' }}
                 onClick={(e) => e.stopPropagation()}
               >
