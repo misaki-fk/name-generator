@@ -80,7 +80,7 @@ npm run dev
 
 ## 🌐 デプロイ先
 
-（※デプロイ後にURLを記載）
+https://name-generator-iota-wine.vercel.app
 
 ---
 
