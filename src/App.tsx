@@ -1,5 +1,6 @@
   import { generateName } from './generator'
   import { useState } from 'react'
+  import { motion } from 'framer-motion'
 
   const MODES = ['かわいい', '厨二', 'ギャル', 'ビジネス', 'アイドルオタク']
 
@@ -69,10 +70,24 @@
         </button>
 
         {result && (
-          <div className="bg-white border border-sky-300 rounded-2xl px-8 py-6 text-center max-w-sm shadow-sm">
+          <motion.div
+            key={result.name}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+            className="bg-white border border-sky-300 rounded-2xl px-8 py-6 text-center max-w-sm shadow-sm"
+          >
             <p className="text-2xl font-bold text-sky-500 mb-3">{result.name}</p>
             <p className="text-gray-400 text-sm">{result.reason}</p>
-          </div>
+            <a
+              href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(`私の新しい名前は「${result.name}」\n#名前を授ける`)} `}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-gray-100 text-gray-500 text-sm px-4 py-2 rounded-full hover:bg-gray-200 transition-colors mt-4"
+            >
+              Xでシェア
+            </a>
+          </motion.div>
         )}
       </div>
     )
