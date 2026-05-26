@@ -73,7 +73,7 @@
         </div>
         <div className="text-gray-400 text-xs mt-2 mb-8">※ キーワード1は必須、2・3は任意です</div>
 
-        <div className="text-gray-400 text-sm mb-6">好きなもモードを選んでください</div>
+        <div className="text-gray-400 text-sm mb-6">好きなモードを選んでください</div>
 
         <div className="flex gap-2 flex-wrap justify-center mb-8">
           {MODES.map((m) => (
